@@ -7,32 +7,44 @@ import { HttpService } from './http.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
-    title = 'RESTfulTasks Continued';
-    title2 = 'All the task';
-    title3 = 'The third task';
-    tasks = [];
-    // allTasks: string[];
-    // ngOnInit(){
-    //   this.allTasks = [
-    //     "Learn Angular - Understand services",
-    //     "Manipulate the DOM - Use the 'for of' loop",
-    //     "Bind events - Parantheses indicate events" 
-    //   ];
-    // }
+// export class AppComponent implements OnInit {
+export class AppComponent{
+    title1 = 'Restful Tasks API';
+    tasks = null;
+    task = null;
+    getTask: boolean = false;
+    // newTask: any;
 
     constructor(private _httpService: HttpService){
     }
-    ngOnInit(){
-      this.getTasksFromService()
-    }
-    getTasksFromService(){
+    // ngOnInit(){
+    //   this.newTask = {title: "", description: ""}
+        // this.newTask = {title: "Learn Angular Forms", 
+        //               description: "Two way binding is awesome!"}
+    // }
+    // onSubmit(){
+    //   let observable = this._httpService.addTask(this.newTask);
+    //   observable.subscribe(data => {
+    //     console.log("Got data from post back", data);
+    //     this.newTask = {title:"", description: ""};
+    //   });
+    // }
+    getTasksFromService() { 
       let observable = this._httpService.getTasks();
       observable.subscribe(data => {
-        console.log("Got our data!", data);
-        for (let i in data) {
-          this.tasks.push(`${data[i].title} - ${data[i].description}`);
-        }
+        console.log("Got our data!", data)
+        this.tasks = data;
+        console.log(this.tasks);
+        
+      });
+    }
+    getTaskFromService(id) { 
+      let observable = this._httpService.getTask(id);
+      this.getTask = true;
+      observable.subscribe(data => {
+        console.log("Got one data!", data);
+        this.task = data;
+        console.log("got this.task!", this.task);
       });
     }
   }
