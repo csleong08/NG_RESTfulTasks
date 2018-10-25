@@ -29,7 +29,8 @@ module.exports =
     updateTask: (req,res) => 
     {
         console.log("update task in controller");
-        Task.findById(req.params.id, req.body, {new:true})
+        console.log(req.body);
+        Task.findByIdAndUpdate(req.params.id, req.body, {new:true})
             .then(task=>console.log(task)||res.json(task))
             .catch(errs=>console.log(errs)||res.json(errs))
     },
